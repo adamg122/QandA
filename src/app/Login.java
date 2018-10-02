@@ -41,7 +41,7 @@ public class Login extends HttpServlet {
 	
 			
 			System.out.println("checkUser == true");
-			response.sendRedirect("Game");
+			response.sendRedirect("Main");
 			
 			
 		
