@@ -114,7 +114,7 @@ public class DatabaseController {
 			return listaPytan;
 		}
 
-		String searchString = "SELECT * FROM pytania ORDER BY 'id' desc";
+		String searchString = "SELECT * FROM pytania";
 		try {
 			result = statement.executeQuery(searchString);
 		} catch (SQLException e) {
@@ -130,7 +130,7 @@ public class DatabaseController {
 				pytanie.setTresc(result.getString("pytanie"));
 				pytanie.setIdDodajacego(result.getInt("iddodajacego"));
 				pytanie.setNazwaDodajacego(result.getString("dodal"));
-				pytanie.setRank(result.getInt("rank"));
+				pytanie.setRank(result.getInt("ranks"));
 				pytanie.setLiczbaOdpowiedzi(result.getInt("howManyAnswers"));
 
 				listaPytan.add(pytanie);

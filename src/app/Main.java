@@ -24,7 +24,7 @@ public class Main extends HttpServlet {
 		
 		
 		DatabaseController dbc = new DatabaseController();
-		ArrayList<Pytanie> listaPytan = dbc.getListaPytanTest();
+		ArrayList<Pytanie> listaPytan = dbc.getListaPytan();
 		
 		request.setAttribute("listaPytan", listaPytan);
 

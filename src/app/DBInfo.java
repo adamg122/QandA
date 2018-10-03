@@ -4,15 +4,15 @@ public class DBInfo {
 	
 	static String host = "localhost"; 
 	
-	static String DBname = "lllc";
+	static String DBname = "qanda";
 	static int port = 3306;
 	static String mySQLdbURL = "jdbc:mysql://" + host + ":" + port + "/"
-			+ DBname;
+			+ DBname + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
 	static String user = "user";
 	static String password = "password";
 	
-	static String driver = "com.mysql.jdbc.Driver";
+	static String driver = "com.mysql.cj.jdbc.Driver";
 
 	public DBInfo() {
 
