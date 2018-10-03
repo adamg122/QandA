@@ -1,5 +1,5 @@
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="app.Pytanie"%>
+<%@ page import="app.Odpowiedz"%>
 
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -119,16 +119,15 @@ th {
 	<div id="main">
 		<table class="table">
 			<tr>
-				<th class="sides">Numer</th>
 				<th class="sides">Głosy</th>				
-				<th class="sides">Odpowiedzi</th>
+				<th class="sides">Komentarze</th>
 				<th class="middle">Temat</th>			
 				<th class="middle">Dodał</th>
 			</tr>
 
 			<%
-				ArrayList<Pytanie> listaPytan = (ArrayList<Pytanie>) request.getAttribute("listaPytan");
-					if (listaPytan == null || listaPytan.isEmpty()) {
+				ArrayList<Odpowiedz> listaOdpowiedzi = (ArrayList<Odpowiedz>) request.getAttribute("listaOdpowiedzi");
+					if (listaOdpowiedzi == null || listaOdpowiedzi.isEmpty()) {
 			%><tr>
 				<td>Pusto</td>
 				<td>Pusto</td>
@@ -136,13 +135,12 @@ th {
 			<%
 				} else {
 						int i = 1;
-						for (Pytanie pytanie : listaPytan) {
+						for (Odpowiedz odp : listaOdpowiedzi) {
 			%><tr>
-				<td class="sides"><%=pytanie.getId()%></td>
-				<td class="sides"><%=pytanie.getRank()%></td>
-				<td class="sides"><%=pytanie.getliczbaOdpowiedzi()%></td>				
-				<td class="middle"><a href="Quest?id=<%=pytanie.getId()%>"><%=pytanie.getTresc()%></a></td>
-				<td class="sides"><%=pytanie.getNazwaDodajacego()%></td>
+				<td class="sides"><%=odp.getRank()%></td>
+				<td class="sides"><%=odp.getliczbaKomentarzy()%></td>				
+				<td class="middle"><%=odp.getTresc()%></td>
+				<td class="sides"><%=odp.getNazwaDodajacego()%></td>
 			</tr>
 			<%
 				++i;

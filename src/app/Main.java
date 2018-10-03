@@ -20,8 +20,9 @@ public class Main extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-
+			HttpServletResponse response) throws ServletException, IOException {		
+		
+		
 		DatabaseController dbc = new DatabaseController();
 		ArrayList<Pytanie> listaPytan = dbc.getListaPytanTest();
 		

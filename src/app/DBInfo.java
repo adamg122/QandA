@@ -2,7 +2,7 @@ package app;
 
 public class DBInfo {
 	
-	static String host = "jws-app-mysql"; 
+	static String host = "localhost"; 
 	
 	static String DBname = "lllc";
 	static int port = 3306;
