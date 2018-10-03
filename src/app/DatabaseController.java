@@ -12,76 +12,6 @@ import app.DBInfo;
 
 public class DatabaseController {
 
-	public ArrayList<Pytanie> getListaPytanTest() {
-		ArrayList<Pytanie> listaPytan = new ArrayList<Pytanie>();
-
-		Pytanie pytanie = new Pytanie();
-
-		pytanie.setId(1);
-		pytanie.setTresc("Pytanie testowe jeden");
-		pytanie.setIdDodajacego(1);
-		pytanie.setNazwaDodajacego("Admin");
-		pytanie.setRank(4);
-		pytanie.setLiczbaOdpowiedzi(2);
-
-		Pytanie pytanie2 = new Pytanie();
-
-		pytanie2.setId(2);
-		pytanie2.setTresc("Pytanie testowe dwa");
-		pytanie2.setIdDodajacego(2);
-		pytanie2.setNazwaDodajacego("User");
-		pytanie2.setRank(5);
-		pytanie2.setLiczbaOdpowiedzi(1);
-
-		listaPytan.add(pytanie);
-
-		listaPytan.add(pytanie2);
-
-		return listaPytan;
-	}
-
-	public ArrayList<Odpowiedz> getListaOdpowiedziTest(int idPytania) {
-		ArrayList<Odpowiedz> listaOdpowiedzi = new ArrayList<Odpowiedz>();
-
-		Odpowiedz odp = new Odpowiedz();
-
-		odp.setId(1);
-		odp.setIdPytanie(1);
-		odp.setTresc("Odpowiedz do pytania jeden");
-		odp.setIdDodajacego(1);
-		odp.setNazwaDodajacego("user");
-		odp.setRank(4);
-		odp.setLiczbaKomentarzy(2);
-
-		Odpowiedz odp2 = new Odpowiedz();
-
-		odp2.setId(2);
-		odp2.setIdPytanie(2);
-		odp2.setTresc("Odpowiedz do pytania dwa");
-		odp2.setIdDodajacego(2);
-		odp2.setNazwaDodajacego("admin");
-		odp2.setRank(3);
-		odp2.setLiczbaKomentarzy(1);
-
-		if (idPytania == odp.getIdPytania()) {
-			listaOdpowiedzi.add(odp);
-		}
-		if (idPytania == odp2.getIdPytania()) {
-			listaOdpowiedzi.add(odp2);
-		}
-
-		/*
-		 * for (Odpowiedz odpowiedz : listaOdpowiedzi) { if (odpowiedz.getIdPytania() ==
-		 * idPytania) { listaOdpowiedzi.add(odpowiedz);
-		 * 
-		 * }
-		 * 
-		 * }
-		 */
-
-		return listaOdpowiedzi;
-	}
-
 	public ArrayList<Odpowiedz> getListaOdpowiedzi(int idPytania) {
 
 		ArrayList<Odpowiedz> listaOdpowiedzi = new ArrayList<Odpowiedz>();
@@ -126,20 +56,17 @@ public class DatabaseController {
 		try {
 			while (result.next()) {
 
-				//if (result.getInt("idp") == idPytania) {
+				Odpowiedz odp = new Odpowiedz();
 
-					Odpowiedz odp = new Odpowiedz();
+				odp.setIdPytanie(result.getInt("idp"));
+				odp.setId(result.getInt("id"));
+				odp.setTresc(result.getString("odpowiedz"));
+				odp.setIdDodajacego(result.getInt("idUser"));
+				// odp.setNazwaDodajacego(result.getString("dodal"));
+				odp.setRank(result.getInt("ranks"));
+				odp.setLiczbaKomentarzy(result.getInt("howManyComments"));
 
-					odp.setIdPytanie(result.getInt("idp"));
-					odp.setId(result.getInt("id"));
-					odp.setTresc(result.getString("odpowiedz"));
-					odp.setIdDodajacego(result.getInt("idUser"));
-					// odp.setNazwaDodajacego(result.getString("dodal"));
-					odp.setRank(result.getInt("ranks"));
-					odp.setLiczbaKomentarzy(result.getInt("howManyComments"));
-
-					listaOdpowiedzi.add(odp);
-			//}
+				listaOdpowiedzi.add(odp);
 
 			}
 		} catch (SQLException e) {
@@ -224,6 +151,113 @@ public class DatabaseController {
 		}
 
 		return listaPytan;
+	}
+
+	public void sendQuery(String query) {
+		Connection connection;
+		Statement statement;
+		
+		String dbURL = DBInfo.getDBURL();
+		String dbuser = DBInfo.getUser();
+		String dbpassword = DBInfo.getPassword();
+		
+		try {
+
+			Class.forName(DBInfo.getDriver());
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error. Driver class not found: " + e);
+			return;
+		}
+		
+		try {
+			connection = DriverManager.getConnection(dbURL, dbuser, dbpassword);
+		} catch (SQLException e) {
+			System.out.println("Error. Connection problem: " + e);
+			return;
+		}
+
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			System.out.println("Error. Can not create the statement: " + e);
+			return;
+		}
+		
+		try {
+			statement.executeQuery(query);
+		} catch (SQLException e) {
+			System.out.println("Error. Problem with executeUpdate: " + e);
+			return ;
+		}
+		
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error. Problem with closing connection: " + e);
+			return ;
+		}
+	}
+	
+	
+	public ArrayList<Pytanie> getListaPytanTest() {
+		ArrayList<Pytanie> listaPytan = new ArrayList<Pytanie>();
+
+		Pytanie pytanie = new Pytanie();
+
+		pytanie.setId(1);
+		pytanie.setTresc("Pytanie testowe jeden");
+		pytanie.setIdDodajacego(1);
+		pytanie.setNazwaDodajacego("Admin");
+		pytanie.setRank(4);
+		pytanie.setLiczbaOdpowiedzi(2);
+
+		Pytanie pytanie2 = new Pytanie();
+
+		pytanie2.setId(2);
+		pytanie2.setTresc("Pytanie testowe dwa");
+		pytanie2.setIdDodajacego(2);
+		pytanie2.setNazwaDodajacego("User");
+		pytanie2.setRank(5);
+		pytanie2.setLiczbaOdpowiedzi(1);
+
+		listaPytan.add(pytanie);
+
+		listaPytan.add(pytanie2);
+
+		return listaPytan;
+	}
+
+	public ArrayList<Odpowiedz> getListaOdpowiedziTest(int idPytania) {
+		ArrayList<Odpowiedz> listaOdpowiedzi = new ArrayList<Odpowiedz>();
+
+		Odpowiedz odp = new Odpowiedz();
+
+		odp.setId(1);
+		odp.setIdPytanie(1);
+		odp.setTresc("Odpowiedz do pytania jeden");
+		odp.setIdDodajacego(1);
+		odp.setNazwaDodajacego("user");
+		odp.setRank(4);
+		odp.setLiczbaKomentarzy(2);
+
+		Odpowiedz odp2 = new Odpowiedz();
+
+		odp2.setId(2);
+		odp2.setIdPytanie(2);
+		odp2.setTresc("Odpowiedz do pytania dwa");
+		odp2.setIdDodajacego(2);
+		odp2.setNazwaDodajacego("admin");
+		odp2.setRank(3);
+		odp2.setLiczbaKomentarzy(1);
+
+		if (idPytania == odp.getIdPytania()) {
+			listaOdpowiedzi.add(odp);
+		}
+		if (idPytania == odp2.getIdPytania()) {
+			listaOdpowiedzi.add(odp2);
+		}
+
+		return listaOdpowiedzi;
 	}
 
 }
