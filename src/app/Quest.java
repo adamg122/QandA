@@ -23,7 +23,7 @@ public class Quest extends HttpServlet {
 
 		DatabaseController dbc = new DatabaseController();
 		
-		ArrayList<Odpowiedz> listaOdpowiedzi = dbc.getListaOdpowiedziTest(Integer.parseInt(request.getParameter("id")));
+		ArrayList<Odpowiedz> listaOdpowiedzi = dbc.getListaOdpowiedzi(Integer.parseInt(request.getParameter("id")));
 		
 		
 		

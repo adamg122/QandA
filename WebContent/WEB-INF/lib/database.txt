@@ -1,0 +1,33 @@
+CREATE TABLE pytania ( id INT (4) PRIMARY KEY , pytanie VARCHAR (200), iddodajacego INT (4), dodal VARCHAR (200) , ranks INT (4), howManyAnswers INT (4) );
+CREATE TABLE odpowiedzi ( id INT (4) PRIMARY KEY , odpowiedz VARCHAR (100), ranks INT (4), idp INT (4), howManyComments INT (4) ,idUser INT (4) );
+CREATE TABLE users ( id INT (4) PRIMARY KEY , login VARCHAR (200), password VARCHAR (200) ) ;
+CREATE TABLE comments ( id INT (4) PRIMARY KEY , comment VARCHAR (200), idUser INT (4), idQuestion INT (4), idAnswer INT (4)) ;
+CREATE TABLE ranks (ranks INT (4),  idUser INT (4), idQuestion INT (4), idAnswer INT (4) ) ;
+
+INSERT INTO pytania ( id , pytanie , iddodajacego, dodal ,  ranks, howManyAnswers ) VALUES ( 1 , 'Jaki smak kisielu smakuje wam najbardziej?' , 1 ,'admin', -1, 0 ) ;
+
+INSERT INTO odpowiedzi ( id , odpowiedz , ranks , idp,howManyComments ,idUser) VALUES ( 1 , 'Malinowy' , 2 , 1,0, 1 ) ;
+INSERT INTO odpowiedzi ( id , odpowiedz , ranks , idp,howManyComments ,idUser) VALUES ( 2 , 'Truskawkowy' , 8 , 1,0,1 ) ;
+INSERT INTO odpowiedzi ( id , odpowiedz , ranks , idp,howManyComments,idUser ) VALUES ( 3 , 'Lubiê o smaku owoców leœnych :)' , 13 , 1,0 ,1) ;
+
+
+INSERT INTO pytania ( id , pytanie, iddodajacego, dodal , ranks, howManyAnswers) VALUES ( 2 , 'Z czym kojarzy Ci siê œrodek transportu?' , 1 ,'admin', 0, 0 ) ;
+
+INSERT INTO odpowiedzi ( id , odpowiedz , ranks , idp ,howManyComments,idUser) VALUES ( 4 , 'Podróze dalakie i te bliskie' , 9 , 2 ,0,1) ;
+INSERT INTO odpowiedzi ( id , odpowiedz , ranks , idp ,howManyComments,idUser) VALUES ( 5 , 'Wakacje' , 11 , 2,0 ,1) ;
+INSERT INTO odpowiedzi ( id , odpowiedz , ranks , idp ,howManyComments,idUser) VALUES ( 6 , 'Nuda...' , 2 , 2,0 ,1) ;
+
+
+INSERT INTO pytania ( id , pytanie , iddodajacego, dodal , ranks, howManyAnswers ) VALUES ( 3 , 'Co to znaczy wed³ug Ciebie, byæ wolnym?' , 1 ,'admin', 1, 0) ;
+
+INSERT INTO odpowiedzi ( id , odpowiedz , ranks , idp,howManyComments,idUser ) VALUES ( 7 , '¯yc w anarchokapitalizmie.' , 7 , 3,0,1 ) ;
+INSERT INTO odpowiedzi ( id , odpowiedz , ranks , idp ,howManyComments,idUser) VALUES ( 8 , '¯ycie bez obowi¹zków' , 11 , 3,0 ,1) ;
+INSERT INTO odpowiedzi ( id , odpowiedz , ranks , idp ,howManyComments,idUser) VALUES ( 9 , 'Latawiec' , 6 , 3,0,1 ) ;
+
+
+INSERT INTO users ( id , login , password ) VALUES ( 1 , 'admin' , 'admin1' );
+INSERT INTO users ( id , login , password ) VALUES ( 2 , 'waldek' , 'wal' ) ;
+INSERT INTO comments ( id , comment , idUser , idQuestion , idAnswer ) VALUES ( 1 , 'dziwne pytanie' , 1 , 1 , 0 ) ;
+INSERT INTO comments ( id , comment , idUser , idQuestion , idAnswer ) VALUES ( 2 , 'trochê bardzo' , 1 , 1 , 0 ) ;
+INSERT INTO comments ( id , comment , idUser , idQuestion , idAnswer ) VALUES ( 3 , 'no chyba nie' , 1 , 0 , 1 ) ;
+INSERT INTO comments ( id , comment , idUser , idQuestion , idAnswer ) VALUES ( 4 , 'coœ tu siê nie zgadza' , 1 , 0 , 1 ) ;

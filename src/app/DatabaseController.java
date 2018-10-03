@@ -70,13 +70,89 @@ public class DatabaseController {
 			listaOdpowiedzi.add(odp2);
 		}
 
-	/*	for (Odpowiedz odpowiedz : listaOdpowiedzi) {
-			if (odpowiedz.getIdPytania() == idPytania) {
-				listaOdpowiedzi.add(odpowiedz);
+		/*
+		 * for (Odpowiedz odpowiedz : listaOdpowiedzi) { if (odpowiedz.getIdPytania() ==
+		 * idPytania) { listaOdpowiedzi.add(odpowiedz);
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
+
+		return listaOdpowiedzi;
+	}
+
+	public ArrayList<Odpowiedz> getListaOdpowiedzi(int idPytania) {
+
+		ArrayList<Odpowiedz> listaOdpowiedzi = new ArrayList<Odpowiedz>();
+
+		Connection connection;
+		Statement statement;
+		ResultSet result = null;
+
+		String dbURL = DBInfo.getDBURL();
+		String dbuser = DBInfo.getUser();
+		String dbpassword = DBInfo.getPassword();
+
+		try {
+
+			Class.forName(DBInfo.getDriver());
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error. Driver class not found: " + e);
+		}
+
+		try {
+			connection = DriverManager.getConnection(dbURL, dbuser, dbpassword);
+		} catch (SQLException e) {
+			System.out.println("Error. Connection problem: " + e);
+			return listaOdpowiedzi;
+		}
+
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			System.out.println("Error. Can not create the statement: " + e);
+			return listaOdpowiedzi;
+		}
+
+		String searchString = "SELECT * FROM odpowiedzi WHERE idp =" + idPytania + " ORDER BY ranks DESC;";
+		try {
+			result = statement.executeQuery(searchString);
+		} catch (SQLException e) {
+			System.out.println("Error. Problem with executeUpdate: " + e);
+			return listaOdpowiedzi;
+		}
+
+		try {
+			while (result.next()) {
+
+				//if (result.getInt("idp") == idPytania) {
+
+					Odpowiedz odp = new Odpowiedz();
+
+					odp.setIdPytanie(result.getInt("idp"));
+					odp.setId(result.getInt("id"));
+					odp.setTresc(result.getString("odpowiedz"));
+					odp.setIdDodajacego(result.getInt("idUser"));
+					// odp.setNazwaDodajacego(result.getString("dodal"));
+					odp.setRank(result.getInt("ranks"));
+					odp.setLiczbaKomentarzy(result.getInt("howManyComments"));
+
+					listaOdpowiedzi.add(odp);
+			//}
 
 			}
+		} catch (SQLException e) {
+			System.out.println("Error. Problem reading data: " + e);
+			return listaOdpowiedzi;
+		}
 
-		}*/
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error. Problem with closing connection: " + e);
+			return listaOdpowiedzi;
+		}
 
 		return listaOdpowiedzi;
 	}
